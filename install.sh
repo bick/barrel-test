@@ -13,10 +13,10 @@ main() {
     if [ "$os" = "Linux" ]; then
         case $arch in
             x86_64)
-                noble_uri="https://github.com/bick/noble-cli/releases/download/test/noble.tar.gz"
+                noble_uri="https://github.com/bick/noble-cli/releases/download/test/noble-x86_64.tar.gz"
                 ;;
             arm64)
-                noble_uri="https://github.com/bick/noble-cli/releases/download/test/noble.tar.gz"
+                noble_uri="https://github.com/bick/noble-cli/releases/download/test/noble-arm64.tar.gz"
                 ;;
             *)
                 echo "Error: Unsupported architecture $arch" 1>&2
