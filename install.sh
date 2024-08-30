@@ -49,17 +49,21 @@ main() {
     rm "$tmp_dir/noble.tar.gz"
 
     echo "noble was installed successfully to $exe"
-    if command -v noble >/dev/null; then
-        echo "Run 'noble --help' to get started"
+
+    # Determine the shell profile file
+    case $SHELL in
+    /bin/zsh) shell_profile="$HOME/.zshrc" ;;
+    *) shell_profile="$HOME/.bashrc" ;;
+    esac
+
+    # Add to PATH if not already present
+    if ! grep -q 'NOBLE_INSTALL' "$shell_profile"; then
+        echo "Adding Noble to your PATH in $shell_profile..."
+        echo "export NOBLE_INSTALL=\"$noble_install\"" >> "$shell_profile"
+        echo "export PATH=\"\$NOBLE_INSTALL/bin:\$PATH\"" >> "$shell_profile"
+        echo "Noble has been added to your PATH. Please restart your terminal or run 'source $shell_profile' to apply the changes."
     else
-        case $SHELL in
-        /bin/zsh) shell_profile=".zshrc" ;;
-        *) shell_profile=".bash_profile" ;;
-        esac
-        echo "Manually add the directory to your \$HOME/$shell_profile (or similar):"
-        echo "  export NOBLE_INSTALL=\"$noble_install\""
-        echo "  export PATH=\"\$NOBLE_INSTALL/bin:\$PATH\""
-        echo "Run '$exe --help' to get started"
+        echo "Noble is already in your PATH."
     fi
 }
 
